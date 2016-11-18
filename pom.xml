@@ -12,5 +12,6 @@
 
     <modules>
         <module>performance-kafka-producer</module>
+        <module>performance-kafka-consumer</module>
     </modules>
 </project>

@@ -20,11 +20,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling
 public class PerformanceSpringKafkaApplication {
 
-	private int i = 0;
+	private volatile int i = 0;
 
-	@Scheduled(fixedDelay=5000)
+	private volatile int seconds = 0;
+
+	@Scheduled(fixedRate=1000)
 	public void scheduled(){
-		System.out.println("Messages consumed: " + i);
+		System.out.println("Messages consumed after " + ++seconds + ":" + i);
 	}
 
 	@Bean

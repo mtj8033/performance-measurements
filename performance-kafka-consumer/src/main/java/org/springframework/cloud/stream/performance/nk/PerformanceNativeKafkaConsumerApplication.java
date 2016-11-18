@@ -22,11 +22,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 @SpringBootApplication
 public class PerformanceNativeKafkaConsumerApplication {
 
-    private int i = 0;
+    private volatile int i = 0;
 
-    @Scheduled(fixedDelay=5000)
+    private volatile int seconds = 0;
+
+    @Scheduled(fixedRate=1000)
     public void scheduled(){
-        System.out.println("Messages consumed: " + i);
+        System.out.println("Messages consumed after " + ++seconds + ":" + i);
     }
 
     @Bean
@@ -43,7 +45,7 @@ public class PerformanceNativeKafkaConsumerApplication {
             KafkaConsumer<byte[], byte[]> consumer = new KafkaConsumer<>(configs);
 
             consumer.subscribe(Collections.singletonList("performance-test"));
-            while (i < 100000) {
+            while (i < 1000000) {
                 ConsumerRecords<byte[], byte[]> consumerRecords = consumer.poll(1000);
                 for (ConsumerRecord<byte[], byte[]> consumerRecord : consumerRecords) {
                     i++;

@@ -12,17 +12,20 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableBinding(Sink.class)
 public class PerformanceKafkaConsumerApplication {
 
-	private int i = 0;
+	private volatile int i = 0;
+
+	private volatile int seconds = 0;
 
 	@StreamListener(Sink.INPUT)
 	public void processMessage(Message<?> message) {
 		i++;
 	}
 
-	@Scheduled(fixedDelay=5000)
-	private void scheduled(){
-		System.out.println("Messages consumed: " + i);
+	@Scheduled(fixedRate=1000)
+	public void scheduled(){
+		System.out.println("Messages consumed after " + ++seconds + ":" + i);
 	}
+
 
 
 	public static void main(String[] args) {
