@@ -1,5 +1,5 @@
 # Run the producer
-`./mvnw spring-boot:run -Dstart-class=org.springframework.cloud.stream.performance.scst.PerformanceKafkaConsumerApplication`
+`./mvnw spring-boot:run`
 
 # Run any or all consumers
 ## Spring Cloud Stream
